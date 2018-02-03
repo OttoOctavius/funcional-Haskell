@@ -1,13 +1,16 @@
 
 data Persona = Persona Int String
-
-edad (Persona i _) = i
-
-nombre (Persona _ nom) = nom
  -- extend Object -- algunas propiedades comunes de objetos
+edad (Persona i _) = i
+nombre (Persona _ nom) = nom
 
-main = let per = Persona 3 "pepe" in
-           do putStrLn $ nombre per
+data Empleado = Empleado String Persona
+edad2 (Empleado _ self) = edad self
+nombre2 (Empleado _ self) = nombre self
+
+main = let per = Persona 43 "pepe"
+           empl = Empleado "Bancario" per in
+           do putStrLn $ nombre2 empl
            
 {- Buscar forma de transformar 
   nombre persona    -> persona#nombre 
