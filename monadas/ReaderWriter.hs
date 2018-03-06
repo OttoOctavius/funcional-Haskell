@@ -89,12 +89,5 @@ eval5 (App e1 e2) = do tick
                                           (eval5 body)
                             _ -> throwError "type error in application"
 
-
-
-
-
-
-
-
-
-
+tick = return 3
+--runEval5 Map.empty 2 $eval5 (Plus (Lit 67) (Lit 2))

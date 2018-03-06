@@ -1,5 +1,12 @@
 
-data Instruccion a = Load a (Instruccion a) | Paralel a (Instruccion a) | Secuencial a (Instruccion a) | Set a
-data Var = Pos String |  Negado String 
+data Instruccion =   LD Var (Instruccion) | LDN Var (Instruccion) |
+                     OR Var (Instruccion) | NOR Var (Instruccion) |
+                     AND Var (Instruccion)| NAND Var (Instruccion) |
+                     SET Var | RST Var | 
 
-progbasico = Load (Pos "IN1") (Set (Pos "OUT1"))
+data Var = IN String | OUT String 
+
+progbasico = LD (IN "0") (SET (OUT "1"))
+
+eval :: Instruccion -> [Var]
+eval (LD Var inst) = Var : (eval inst) 
