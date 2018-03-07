@@ -1,10 +1,12 @@
 
-data Instruccion =   LD Var (Instruccion) | LDN Var (Instruccion) |
-                     OR Var (Instruccion) | NOR Var (Instruccion) |
-                     AND Var (Instruccion)| NAND Var (Instruccion) |
-                     SET Var | RST Var | 
+data Instruccion =   LD Var (Instruccion) |
+                     OR Var (Instruccion) |
+                     AND Var (Instruccion)|
+                     SET Var | RST Var | HOLD Var
 
-data Var = IN String | OUT String 
+data Var_t t = IN t | OUT t | NIN t | NOUT t
+newtype Var = Var_t String
+
 
 progbasico = LD (IN "0") (SET (OUT "1"))
 
