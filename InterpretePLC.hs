@@ -31,15 +31,17 @@ eval (OR var inst) = var : (eval inst)
                                 Just val -> return val
 -}
 guardar (SET v) b = do env <- ask
-                       if b then tell (Map.lookup v env) b
-                         else return env
+                       if b then Map.insert v b env
+                            else return env
 guardar (RST v) b = guardar (SET v) (!b)
 guardar (HOLD v) b = guardar (SET v) b >>= guardar (RST v) b
-                            {-
-guardar (RST v) = \b-> do if b == false then
-                            env <- ask
-                            case Map.lookup n env of
-                              Nothing -> throwError "type error"
-                              Just val -> tell val
-                         -- else Nothing
--}
+
+leer :: Instruccion -> Bool
+leer (LD var inst) = do env <- ask
+                        return $ Map.lookup var env
+eval (AND var inst)= do env <- ask
+                        return $ Map.lookup var env
+eval (OR var inst) = do env <- ask
+                        return $ Map.lookup var env
+
+                        --
