@@ -17,6 +17,10 @@ data Instruccion =   LD Var (Instruccion) |
 data Var_t t = IN t | OUT t | NIN t | NOUT t
 newtype Var = Var_t String
 
+iniciar_variables = Map.empty
+esta_variable dicc = \var. member var dicc
+setear_variable nombre bool = insert nombre bool 
+--adjust f->f key dicc    si se quiere con f->Maybe f, usar update 
 
 progbasico = LD (IN "0") (SET (OUT "1"))
 
@@ -34,14 +38,16 @@ guardar (SET v) b = do env <- ask
                        if b then Map.insert v b env
                             else return env
 guardar (RST v) b = guardar (SET v) (!b)
-guardar (HOLD v) b = guardar (SET v) b >>= guardar (RST v) b
+guardar (HOLD v) b = do env  <- ask
+                        env' <- guardar (SET v) b env
+                        guardar (RST v) b env'
 
-leer :: Instruccion -> Bool
+--leer :: Instruccion -> Maybe Bool
 leer (LD var inst) = do env <- ask
                         return $ Map.lookup var env
-eval (AND var inst)= do env <- ask
+leer (AND var inst)= do env <- ask
                         return $ Map.lookup var env
-eval (OR var inst) = do env <- ask
+leer (OR var inst) = do env <- ask
                         return $ Map.lookup var env
 
                         --
