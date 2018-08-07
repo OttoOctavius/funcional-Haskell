@@ -36,7 +36,7 @@ eval3 :: Exp -> Eval3 Value
 eval3 (Lit i) = return $ IntVal i
 eval3 (Var n) = do env <- ask
                    case Map.lookup n env of
-                        Nothing -> throwError "type error"
+                        Nothing -> throwError "Variable no existe en entorno"
                         Just val -> return val
 eval3 (Plus e1 e2) =      do e1' <- eval3 e1 
                              e2' <- eval3 e2
@@ -50,10 +50,14 @@ eval3  (App e1 e2) = do val1 <- eval3 e1
                         case val1 of
                              FunVal env0 n body -> local (const(Map.insert n val2 env0)) (eval3 body)
                              _ -> throwError "type error"
-
+                             
 --runEval3 Map.empty (eval3 exampleExp)
 {- Que hace local
-The local function is used for modifying the environment for the recursive call. Local has the type (r ? r) ? m a ? m a, that is we need to pass in a function which maps the current environment to the one to be used in the nested computation, which is the second argument. In our case, the nested environment does not depend on the current environment, so we simply pass in a constant function using const.
+The local function is used for modifying the environment for the recursive call. 
+Local has the type (r ? r) ? m a ? m a, that is we need to pass in a function which maps the
+ current environment to the one to be used in the nested computation, which is the second argument.
+  In our case, the nested environment does not depend on the current environment, so we simply pass
+   in a constant function using const.
 -}
 
 --Loogin, puede interponerse en con ErrorT y mostrar en output.

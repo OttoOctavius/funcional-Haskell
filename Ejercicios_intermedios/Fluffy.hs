@@ -17,8 +17,8 @@ instance Fluffy Maybe where
 
 -- Exercise 3
 -- Relative Difficulty: 5
-instance Fluffy ((->) t) where
-  furry f g = error "todo"
+--instance Fluffy ((->) t) where
+--  furry f g = \x -> g(f x)
 
 newtype EitherLeft b a = EitherLeft (Either a b)
 newtype EitherRight a b = EitherRight (Either a b)

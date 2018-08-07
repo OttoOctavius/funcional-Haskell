@@ -14,8 +14,8 @@ papa xs = do
 	y <- map (+x) [4 5 6]
 	return y
 
-Main = do y <- return "chau" >>= (\x-> putStrLn x) >> return 3
+main = do y <- return "chau" >>= (\x-> putStrLn x) >> return 3
           return y
 -- devuelve 3, e imprimio en pantalla
 
-isJust $ pred3 5
+--isJust $ pred3 5
