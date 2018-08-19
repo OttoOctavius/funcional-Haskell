@@ -61,10 +61,10 @@ module Main where
             <|> parseString
             <|> parseNumber
             <|> parseQuoted
-            <|> do char '('
+            <|> (do  char '('
                     x <- try parseList <|> parseDottedList
                     char ')'
-                    return x
+                    return x)
 
 
 
@@ -78,6 +78,8 @@ module Main where
     showVal (DottedList head tail) = "(" ++ unwordsList head ++ " . " ++ showVal tail ++ ")"
         where unwordsList = unwords . map showVal
 
+    unwordsList :: [LispVal] -> String
+    unwordsList = unwords . map showVal
 
     main :: IO ()
     main = do 
