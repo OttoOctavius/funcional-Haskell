@@ -10,6 +10,8 @@ module Main where
         | String String
         | Bool Bool
 
+    instance Show LispVal where show = showVal
+    
     symbol :: Parser Char
     symbol = oneOf "!#$%&|*+-/:<=>?@^_~"
 
@@ -37,8 +39,8 @@ module Main where
 
     readExpr :: String -> String
     readExpr input = case parse parseExpr "lisp" input of
-        Left err -> "No match: " ++ show err
-        Right _ -> "Found value"
+            Left err -> "No match: " ++ show err
+            Right _ -> "Found value"
 
     spaces :: Parser ()
     spaces = skipMany1 space
@@ -56,17 +58,20 @@ module Main where
         char '\''
         x <- parseExpr
         return $ List [Atom "quote", x]
+        
     parseExpr :: Parser LispVal
     parseExpr = parseAtom
             <|> parseString
             <|> parseNumber
             <|> parseQuoted
-            <|> (do  char '('
+            <|> do  char '('
                     x <- try parseList <|> parseDottedList
                     char ')'
-                    return x)
+                    return x
 
-
+    readExpr input = case parse parseExpr "lisp" input of
+        Left err -> "No match: " ++ show err
+        Right val -> "Found " ++ show val
 
     showVal :: LispVal -> String
     showVal (String contents) = "\"" ++ contents ++ "\""
