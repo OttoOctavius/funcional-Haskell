@@ -1,3 +1,5 @@
+import Geometry
+
 module Geometry.Sphere  
 ( volume  
 , area  
