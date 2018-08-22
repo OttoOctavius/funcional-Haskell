@@ -32,6 +32,7 @@ module Main where
                             _    -> Atom atom
     parseNumber :: Parser LispVal
     parseNumber = liftM (Number . read) $ many1 digit
+    
     parseExpr :: Parser LispVal
     parseExpr = parseAtom
             <|> parseString
