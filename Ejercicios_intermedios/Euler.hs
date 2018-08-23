@@ -8,5 +8,7 @@ primesTo m = ps
              ps = map head $ takeWhile (not.null) 
                            $ scanl (\\) [2..m] [[p, p+p..m] | p <- ps]
 {-Numeros primos, para el numero 600851475143 -}
-sumadeprimosDe600851475143 = sum [ x | x <- primesTo 600851475143]
+sumadeprimosDe600851475143 = max [ x | x <- primesTo 600851475143]
 
+fibs = 1 : 1 : zipWith (+) fibs (tail fibs)
+sumaEvenfibonassi = sum [x | x <- fibs, x < 4000000 && even x ]
