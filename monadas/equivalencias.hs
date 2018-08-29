@@ -1,6 +1,4 @@
 import Control.Monad
+import Control.Either
 
-main = do
-          x <- return $ 3
-          x
-          --bind (Just 3) (+1) 
+main = Right 3
