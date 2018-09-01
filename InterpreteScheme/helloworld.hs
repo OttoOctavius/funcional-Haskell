@@ -32,16 +32,6 @@ module Main where
                             _    -> Atom atom
     parseNumber :: Parser LispVal
     parseNumber = liftM (Number . read) $ many1 digit
-    
-    parseExpr :: Parser LispVal
-    parseExpr = parseAtom
-            <|> parseString
-            <|> parseNumber
-
-    readExpr :: String -> String
-    readExpr input = case parse parseExpr "lisp" input of
-            Left err -> "No match: " ++ show err
-            Right _ -> "Found value"
 
     spaces :: Parser ()
     spaces = skipMany1 space
@@ -70,9 +60,10 @@ module Main where
                     char ')'
                     return x
 
+    readExpr :: String -> LispVal
     readExpr input = case parse parseExpr "lisp" input of
-        Left err -> "No match: " ++ show err
-        Right val -> "Found " ++ show val
+        Left err -> String $ "No match: " ++ show err
+        Right val -> val
 
     showVal :: LispVal -> String
     showVal (String contents) = "\"" ++ contents ++ "\""
