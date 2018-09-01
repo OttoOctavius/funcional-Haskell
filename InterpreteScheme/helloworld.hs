@@ -82,11 +82,16 @@ module Main where
     showVal (Bool False) = "#f"
     showVal (List contents) = "(" ++ unwordsList contents ++ ")"
     showVal (DottedList head tail) = "(" ++ unwordsList head ++ " . " ++ showVal tail ++ ")"
-        where unwordsList = unwords . map showVal
 
     unwordsList :: [LispVal] -> String
     unwordsList = unwords . map showVal
 
+    eval :: LispVal -> LispVal
+    eval val@(String _) = val
+    eval val@(Number _) = val
+    eval val@(Bool _) = val
+    eval (List [Atom "quote", val]) = val
+            
     main :: IO ()
     main = do 
             (expr:_) <- getArgs
