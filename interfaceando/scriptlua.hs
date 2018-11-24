@@ -1,8 +1,10 @@
 
-import qualified Scripting.Lua as Lua
+import Foreign.Lua as Lua
 
-main = do
-     l <- Lua.newstate
-     Lua.openlibs l
-     Lua.callproc l "print" "Hello from Lua"
-     Lua.close l
+main :: IO ()
+main = Lua.run prog
+  where
+    prog :: Lua ()
+    prog = do
+      Lua.openlibs  -- load Lua libraries so we can use 'print'
+      Lua.callFunc "print" "Hello, World!"
