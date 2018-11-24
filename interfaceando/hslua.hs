@@ -1,22 +1,22 @@
+{-# LANGUAGE OverloadedStrings #-}
+
+import qualified Data.ByteString as B
+import Data.Monoid
 import Foreign.Lua as Lua
 
--- | A value that can be read from the Lua stack.
-class Peekable a where
-    -- | Check if at index @n@ there is a convertible Lua value and
-    --   if so return it.  Throws a @'LuaException'@ otherwise.
-    peek :: StackIndex -> Lua a
-  -- | A value that can be pushed to the Lua stack.
-class Pushable a where
-    -- | Pushes a value onto Lua stack, casting it into meaningfully
-    --   nearest Lua type.
-    push :: a -> Lua ()
-
 main :: IO ()
-main = Lua.run prog
-  where
-    prog :: Lua ()
-    prog = do
-      Lua.openlibs  -- load Lua libraries so we can use 'print'
-      pushHaskellFunction (putStr)
-      setglobal "putStr"
-      Lua.callFunc "putStr" "yo"
+main = Lua.run $ do
+  openlibs
+  registerHaskellFunction "concat" concat'
+  registerHaskellFunction "pow" pow
+  loadfile "haskellfun.lua"
+  call 0 0
+
+concat' :: B.ByteString -> B.ByteString -> Lua B.ByteString
+concat' s1 s2 = return $ s1 <> s2
+
+pow :: Lua.Number -> Lua.Number -> Lua Lua.Number
+pow d1 d2 = return $ d1 ** d2
+
+helloWorld _ :: Lua B.ByteString
+helloWorld _ = return "Hello, World!"

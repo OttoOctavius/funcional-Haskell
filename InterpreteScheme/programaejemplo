@@ -1,0 +1,2 @@
+if(true) then skip else 
+    (x:=3;skip)
