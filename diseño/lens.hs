@@ -13,4 +13,4 @@ shiftAtomX :: Atom -> Atom
 shiftAtomX = over (point . x) (+ 1)
 
 main = let atom = Atom { _element = "C", _point = Point { _x = 1.0, _y = 2.0 } }
-       in shiftAtomX atom
+       in print $ shiftAtomX atom
