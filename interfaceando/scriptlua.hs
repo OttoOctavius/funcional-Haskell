@@ -1,5 +1,7 @@
 
 import Foreign.Lua as Lua
+--import OOHaskell
+--Wall para los warnings
 
 main :: IO ()
 main = Lua.run prog
