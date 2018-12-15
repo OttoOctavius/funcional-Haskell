@@ -1,13 +1,19 @@
 import Data.Array --http://hackage.haskell.org/package/array-0.5.2.0/docs/Data-Array.html
 import Control.Monad --Para usar el forM_
 --import Control.Monad.LoopWhile
-import Data.Vector ((!), generate)
- 
+--import Data.Vector ((!), generate)
+import Data.Dynamic
 
+defaul :: Integer 
+defaul = 0
+idayvuelta = fromDyn (toDyn (3::Integer)) defaul
+mostrarDynamic = putStrLn (show idayvuelta) >>  return ()
+{-
 buyable n = r!n
   where
     r = generate (n+1) f
     f i = i == 0 || i >= 6 && r!(i-6) || i >= 9 && r!(i-9) || i >= 20 && r!(i-20)
+-}
 
 --Este tipo de definicion de array permite recursion sobre "xs"
 accesos = let xs = array (0,10) [(i, i * i) | i <- [0..10]]
@@ -24,4 +30,4 @@ incremUpdates = let lista = listArray (0,2) [10,20,30]
                 while (lista!0 < 0)
         -}
 
-main = putStrLn $ buyable 10
+main = 
