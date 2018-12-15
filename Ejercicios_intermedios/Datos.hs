@@ -3,11 +3,18 @@ import Control.Monad --Para usar el forM_
 --import Control.Monad.LoopWhile
 --import Data.Vector ((!), generate)
 import Data.Dynamic
+--Nuevos: http://hackage.haskell.org/package/containers-0.6.0.1/docs/Data-Sequence.html
+--basado en https://en.wikipedia.org/wiki/Finger_tree
 
+--Deben ser del tipo "Typeable"
 defaul :: Integer 
 defaul = 0
 idayvuelta = fromDyn (toDyn (3::Integer)) defaul
-mostrarDynamic = putStrLn (show idayvuelta) >>  return ()
+--fromDynamic :: Typeable a => Dynamic -> Maybe a
+mostrarDynamic = putStrLn (show idayvuelta)
+
+
+
 {-
 buyable n = r!n
   where
