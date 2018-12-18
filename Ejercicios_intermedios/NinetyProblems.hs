@@ -15,3 +15,5 @@ data NestedList a = Elem a | List [NestedList a]
 flatten (Elem num)    = [(Elem num)]
 flatten (List (x:xs)) = (flatten x) ++ (flatten xs)
 flatten (List [])     = []
+
+compress "aaaabccaadeeee"

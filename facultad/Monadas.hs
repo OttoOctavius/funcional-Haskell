@@ -9,13 +9,7 @@ pred3 x = do n <- pred x    -- pred3 x = pred x >>= \n ->
   where pred Z = Nothing    --  where pred Z     = Nothing
         pred (S x) = Just x --        pred (S x) = Just x
 
-papa xs = do
-	x <- xs
-	y <- map (+x) [4 5 6]
-	return y
-
-main = do y <- return "chau" >>= (\x-> putStrLn x) >> return 3
-          return y
+main = putStr ( show (isJust $ pred3 (S Z)) )
+--do y <- return "chau" >>= (\x-> putStrLn x) >> return 3 >>= return y
 -- devuelve 3, e imprimio en pantalla
 
---isJust $ pred3 5
