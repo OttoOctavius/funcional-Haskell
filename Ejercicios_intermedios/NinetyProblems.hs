@@ -17,3 +17,7 @@ flatten (List (x:xs)) = (flatten x) ++ (flatten xs)
 flatten (List [])     = []
 
 compress "aaaabccaadeeee"
+
+mygcd a b = if a > b 
+                then mygcd (a-b) b
+                else mygcd b a
