@@ -69,11 +69,11 @@ simpleMVar = do
 
   forkIO $ forever $ takeMVar a >>= putStrLn
 
-  forever $ do
+  forM_ [0..3] $ $ do
       text <- getLine
       putMVar a text
 
-
+--STM : Software Transactional Memory
 
 --transaccion entre trheads 
 

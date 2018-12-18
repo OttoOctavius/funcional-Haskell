@@ -1,6 +1,6 @@
 import Data.Array --http://hackage.haskell.org/package/array-0.5.2.0/docs/Data-Array.html
 import Control.Monad --Para usar el forM_
---import Control.Monad.LoopWhile
+import Control.Monad.LoopWhile
 --import Data.Vector ((!), generate)
 import Data.Dynamic
 --Nuevos: http://hackage.haskell.org/package/containers-0.6.0.1/docs/Data-Sequence.html
@@ -31,10 +31,10 @@ accesos = let xs = array (0,10) [(i, i * i) | i <- [0..10]]
         putStrLn $ "Primer elemento: " ++ show ( assocs xs !!0)
         forM_ [0..10] (\x -> putStrLn $ show (xs!x))
 
-        {-
+
 incremUpdates = let lista = listArray (0,2) [10,20,30]
         in loop $ do return lista
                 while (lista!0 < 0)
-        -}
+        
 
-main = 
+main = incremUpdates
