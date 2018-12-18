@@ -23,6 +23,15 @@ MVar, de Control.Concurrent
 newMVar :: a -> IO (MVar a)
 newEmptyMVar :: IO (MVar a)
 takeMVar :: MVar a -> IO a
+
+data TVar a
+newTVar    :: a -> STM (TVar a)
+readTVar   :: TVar a -> STM a
+writeTVar  :: TVar a -> a -> STM ()
+modifyTVar :: TVar a -> (a -> a) -> STM ()
+There are also alternatives that work in the IO monad.
+newTVarIO   :: a -> IO (TVar a)
+readTVarIO  :: TVar a -> IO a
 -}
 
 magic :: IORef (Maybe Int) -> IO ()
@@ -74,7 +83,38 @@ simpleMVar = do
       putMVar a text
 
 --STM : Software Transactional Memory
+--atomically :: STM a -> IO a
+bigTransaction :: IO ()
+bigTransaction = do
+    value <- atomically $ do
+        var <- newTVar (0 :: Int)
+        modifyTVar var (+1)
+        readTVar var
 
+    print value
+
+atomicReadWrite :: IO ()
+atomicReadWrite = do
+    var <- newTVarIO (0 :: Int)
+
+    atomically $ do
+        value <- readTVar var
+        writeTVar var (value + 1)
+
+    readTVarIO var >>= print
+
+f :: TVar Int -> STM ()
+f var = modifyTVar var (+1)
+
+twoCombined :: IO ()
+twoCombined = do
+    var <- newTVarIO (0 :: Int)
+
+    atomically $ do
+        f var
+        f var
+
+    readTVarIO var >>= print
 --transaccion entre trheads 
 
 maybePrint :: IORef Bool -> IORef Bool -> IO ()
