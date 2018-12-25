@@ -6,18 +6,9 @@
 module Julia where
 
 import Control.Monad
-import Foreign.C
+import Foreign.C as C
 import Foreign.C.String
 --C.include "julia.h"
-
-foreign import ccall "exp" c_exp :: Double -> Double
-
-{-}
-triple :: Int -> Int
-triple x = 3*x
-
-foreign export ccall triple :: Int -> Int
--}
 
 foreign import ccall "jl_init" jl_init :: IO ()
 foreign import ccall "jl_eval_string($1)" jl_eval_string :: CString -> IO ()
